@@ -50,6 +50,7 @@ header{
 #cabecalho .nav .nav-link{
     color: #c46852;
     border: 2px solid #c46852;
+    display:inline-block;
 }
 
 #cabecalho .nav .nav-link:hover{
@@ -60,6 +61,20 @@ header{
     background-color: #c46852;
     color: #e1decf;
 }
+
+#cabecalho .nav .nav-iten{
+    display:inline-block;
+}
+
+.dp-menu ul{
+    position absolute;
+}
+
+.dp-menu ul ul{
+    display:none;
+}
+
+
 
 /* Seção Carousel de Imagens */
 

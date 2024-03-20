@@ -62,6 +62,16 @@
     background-color:#7e9c9f;
 }
 
+.botao:hover{
+    background-color: #66878a;
+}
+
 .link{
-    list-style:none;  
+    text-decoration: none; 
+    padding-top:18px;
+    color:#e1dacf;
+    border: 2px solid #7e9c9f;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
 }
