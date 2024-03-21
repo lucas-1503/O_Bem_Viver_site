@@ -6,21 +6,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="{% static 'Cliente/Cadastro/css/Cadastro.css' %}">
+    <link rel="stylesheet" href="{% static 'Cliente/CadastroUsuario/css/CadastroUsuario.css' %}">
 </head>
 <body>
     <div class="container">
         <div class="formulario">
-            <form action="{% url 'Cadastro' %}" method="POST">{% csrf_token %}
+            <form action="{% url 'CadastroUsuario' %}" method="POST">{% csrf_token %}
                 <label for="name">Nome</label>
-                <input type="text" name="nome" placeholder="Nome Completo">
+                <input type="text" name="username" placeholder="Nome Completo">
                 <br>
                 <label for="email">E-mail</label>
                 <input type="email" name="email" placeholder="E-mail">
                 <br>
                 <label for="password">Senha</label>
-                <input type="password" name="senha" placeholder="senha">
+                <input type="password" name="password" placeholder="senha">
                 <br>
+                <select name="tipo">
+                    <option value="P">Professor</option>
+                    <option value="A">Aluno</option>
+                </select>
                 <input type="submit" value="cadastrar">
             </form>
         </div>

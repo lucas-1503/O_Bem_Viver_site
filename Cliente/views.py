@@ -1,30 +1,30 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+from .models import *
 
-
-def Cadastro(request):
+def CadastroUsuario(request):
     if request.method =="GET":
-        return render(request, 'Cadastro.html')
+        return render(request, 'CadastroUsuario.html')
     else:
         username = request.POST.get('username')
         email = request.POST.get('email')
         senha = request.POST.get('senha')
+        tipo = request.POST.get('tipo')
         
-        user = User.objects.filter(username=username, email=email).first()
+        user = Usuario.objects.filter(username=username, email=email).first()
 
         if user:
             return HttpResponse('Este usuário já existe')
         
-        user = User.objects.create_user(username=username, email=email, password=senha)
+        user = Usuario.objects.create(username=username, email=email, password=senha, tipo=tipo)
         user.save()
         
-        return HttpResponse("usuário cadastrado com sucesso")
+        return HttpResponse("Educando cadastrado com sucesso")
+    
     
 def Login(request):
     if request.method == "GET":

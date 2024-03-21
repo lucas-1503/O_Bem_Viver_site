@@ -1,37 +1,32 @@
-
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-class Educando(models.Model):
-    nome = models.CharField(max_length=100)
-    email = models.EmailField()
-    senha = models.IntegerField()
-
-    def __str__(self): 
-        return self.nome
-
-class Educador(models.Model):
-    nome = models.CharField(max_length=100)
-    email = models.EmailField()
-    senha = models.CharField(max_length=100)
-    educandos = models.ManyToManyField(Educando, related_name='educador')
+class Usuario(AbstractUser):
+    TIPO_CHOICES = (
+        ("P", "Professor"),
+        ("A", "Aluno"),
+    )
+    tipo = models.CharField(max_length=1, choices=TIPO_CHOICES, blank=False, null=False, default="A")
 
     def __str__(self):
-        return self.nome
+        return self.username
 
-    
+
 class Mensagem(models.Model):
-    titulo = models.CharField(max_length=50)
-    remetente = models.ForeignKey(Educador, on_delete=models.CASCADE)
-    conteudo = models.TextField(max_length=300)
-    destinatario = models.ForeignKey(Educando, on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=255)
+    conteudo = models.TextField()
+    data_envio = models.DateTimeField(default=True)
+    remetente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='mensagens_enviadas', null=True)
+    destinatario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='mensagens_recebidas', null=True)
 
-    def __str__(self) :
-        return self.conteudo
+    def __str__(self):
+        return self.titulo
 
 class Boleto(models.Model):
-    data = models.CharField(max_length=50)
-    arquivo = models.FileField(unique=True)
-    destinatario = models.ForeignKey(Educando, on_delete=models.CASCADE)
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
+    data_vencimento = models.DateField(null=True)
+    pdf = models.FileField(upload_to='boletos/', null=True)
+    educando = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='boletos', null=True)
 
-    def __str__(self) :
-        return self.arquivo
+    def __str__(self):
+        return f"Boleto - {self.valor}"
