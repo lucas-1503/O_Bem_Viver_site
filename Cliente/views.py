@@ -1,51 +1,58 @@
-from django.http import HttpResponse
+from .forms import UsuarioForm, LoginForm
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import *
+from .models import Usuario
 
 def CadastroUsuario(request):
-    if request.method =="GET":
-        return render(request, 'CadastroUsuario.html')
-    else:
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        senha = request.POST.get('senha')
-        tipo = request.POST.get('tipo')
-        
-        user = Usuario.objects.filter(username=username, email=email).first()
+    msg=None
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST)
+        if form.is_valid():
+            
+            user = form.save()
 
-        if user:
-            return HttpResponse('Este usuário já existe')
-        
-        user = Usuario.objects.create(username=username, email=email, password=senha, tipo=tipo)
-        user.save()
-        
-        return HttpResponse("Educando cadastrado com sucesso")
+            msg = "Usuario criado"
+            return redirect('../../Cliente/Login/')
+        else:
+            msg = "Formulario invalido"
+    else:        
+        form = UsuarioForm()
+    return render(request, 'CadastroUsuario/CadastroUsuario.html', {'form':form, 'msg':msg})
     
     
 def Login(request):
-    if request.method == "GET":
-        return render(request, 'Login.html')
-    else:
-        username = request.POST.get('username')
-        senha = request.POST.get('senha')
-
-        user = authenticate(username=username, password=senha)
-
-        if user:
-            login_django(request, user)
-            return redirect('/Cliente/Perfil')
+    form = LoginForm(request.POST or None)
+    msg = None
+    if request.method == "POST":
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            print(user)
+            if user is not None and user.is_professor:
+                login_django(request, user)
+                return redirect('PerfilProf')
+            elif user is not None and user.is_aluno:
+                login_django(request, user)
+                return redirect('Perfil')
+            else:
+                msg= "Usuário ou senha inválidos"
         else:
-            return HttpResponse("usuário ou senha invalidos")
+            msg = "Formulário invalido"   
+    return render(request, 'Login/Login.html', {'form':form, 'msg':msg})
+
 
 @login_required
 
 def Perfil(request):
-    return render(request, 'Perfil.html')
+    return render(request, 'Perfil/Perfil.html')
+
+def PerfilProf(request):
+    return render(request, 'PerfilProf/PerfilProf.html')
     
 def logout_view(request):
     logout(request)
-    return redirect('/Cliente/Login')    
+    return redirect('/Cliente/Login/Login')    

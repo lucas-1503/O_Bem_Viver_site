@@ -12,11 +12,11 @@
     <div class="container">
         <div class="formulario">
             <form class="form" action="{% url 'Login' %}" method="POST"> {% csrf_token %}
-                <label class="label" for="name">Usuário</label>
-                <input class="input" type="text" name="username" placeholder="Seu email">
+                <label class="label" for="username">Usuário</label>
+                <input class="input" type="text" name="username" placeholder="Seu nome">
                 <br>
                 <label class="label" for="password">Senha</label>
-                <input class="input" type="password" name="senha" placeholder="Senha">
+                <input class="input" type="password" name="password" placeholder="Senha">
                 <br>
                 <button class="botao" type="submit">Entrar</Button>
                 <a href="/" class="link">Voltar para o Site</a>    

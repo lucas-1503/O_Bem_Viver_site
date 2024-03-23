@@ -1,12 +1,9 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 class Usuario(AbstractUser):
-    TIPO_CHOICES = (
-        ("P", "Professor"),
-        ("A", "Aluno"),
-    )
-    tipo = models.CharField(max_length=1, choices=TIPO_CHOICES, blank=False, null=False, default="A")
+    is_aluno = models.BooleanField("Aluno",default=False)
+    is_professor = models.BooleanField("Professor",default=False)
 
     def __str__(self):
         return self.username
