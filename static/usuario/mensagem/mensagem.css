@@ -1,0 +1,10 @@
+.conteudo-mensagem{
+    max-width: 800px;
+    width: 100%;
+    border: 2px solid #c18B64;
+    border-radius: 12px;
+}
+
+.paragrafo{
+    border: 2px solid red;
+}

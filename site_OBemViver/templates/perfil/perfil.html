@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>O Bem Viver</title>
+        
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        
+        
+        <style>
+            .corpo{
+                background-color:#e1decf;
+            }
+
+            .vermelho{
+                background-color:#C46852;
+                width: auto; /* ajusta automaticamente à largura do conteúdo */
+                display: block;
+            }
+            .verde{
+                background-color:#7E9C9F;
+                width: auto; /* ajusta automaticamente à largura do conteúdo */
+                display: block;
+            }
+            .laranja{
+                background-color:#c18B64;
+                width: auto; /* ajusta automaticamente à largura do conteúdo */
+                display: block;
+            }
+            .textarea-like {
+                min-height: 100px; /* Defina uma altura mínima desejada */
+                max-height: 500px; /* Defina uma altura máxima desejada */
+                overflow-y: auto; /* Adicione uma barra de rolagem vertical se necessário */
+                padding: 5px; /* Adicione um espaçamento interno */
+                outline: none; /* Remova a borda azul ao focar */
+                resize: none; /* Remova a capacidade de redimensionar */
+                font-family: inherit; /* Use a mesma fonte do texto */
+                font-size: inherit; /* Use o mesmo tamanho de fonte do texto */
+                line-height: inherit; /* Use a mesma altura de linha do texto */
+            }
+            .texto{
+                display:flex;
+                justify-content: center;
+                padding:20px;
+                align-items: center;
+            }
+            .titulo{
+                font-size:32px;
+                background-color:#c18B64;
+                color: #E1DACF;
+            }
+            a:link{
+                border: 3px solid #c46852;
+            }
+        </style>
+        {% endblock head %}
+
+{% block conteudo %}
+<body class='corpo '> 
+    <div class='container-fluid  justify-content-center '>
+        <div >
+            <nav class="navbar navbar-expand-lg position-absolute d-flex" style="background-color: transparent" >
+                <div class="container-fluid " >
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 m-auto ">
+                        <li class="nav-item p-1 ">
+                            <a class='btn  text-center fw-bold' href="{% url 'perfil' %}" style='background-color:#7E9C9F; color:#e1decf;' >Inicio</a>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a class='btn text-center fw-bold' style='background-color:#7E9C9F; color:#e1decf;' href="{% url 'alterar-senha' %}">Dados pessoais</a>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a class='btn text-center fw-bold' style='background-color:#7E9C9F; color:#e1decf;' href="{% url 'listar-boleto' %}">Boletos</a>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a class='btn text-center fw-bold' style='background-color:#7E9C9F; color:#e1decf;' href="{% url 'listar-anotacoes' %}">Anotações de aula</a>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a class='btn text-center fw-bold' style='background-color:#7E9C9F; color:#e1decf;' href="{% url 'logout' %}">Sair</a>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <br>
+            <br>
+            <br>
+            <div class='d-block'>
+                {% if user.avatar == '' and user.genero_usuario == 'Feminino' %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{% static 'img/avatar-mulher.avif' %}" >
+                        </div>
+                        {% endif %}
+                        {% if user.avatar == '' and user.genero_usuario == 'Masculino' %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{% static 'img/avatar-homem.avif' %}" >
+                        </div>
+                        <br>
+                        {% endif %}
+                        {% if user.avatar == '' and user.genero_usuario == 'Outros' %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{% static 'img/avatar-outros.jpg' %}" >
+                        </div>
+                        {% endif %}
+                        {% if user.avatar %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{{user.avatar.url}}" >
+                        </div>
+                        {% endif %}
+                        <br>
+                        <div class='d-flex justify-content-center'>
+                            <button type="button" class='btn btn-light' data-bs-toggle="modal" data-bs-target="#foto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                    <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <br>
+                    {% if user.genero_usuario == 'Masculino' %}
+                            <li class='nav-item list-unstyled'>
+                                <h4 class='text-center'>Olá, seja bem vindo {{ user.username }}</h4>
+                            </li>  
+                            {% endif %}
+                            {% if user.genero_usuario == 'Feminino' %}
+                            <li class='nav-item list-unstyled'>
+                                <h4 class='text-center'>Olá, seja bem vinda {{ user.username }}</h4>
+                            </li>  
+                            {% endif %}
+                            {% if user.genero_usuario == 'Outros' %}
+                            <li class='nav-item list-unstyled'>
+                                <h4 class='text-center'>Olá, seja bem vinde {{ user.username }}</h4>
+                            </li>  
+                            {% endif %}
+            </div>
+            <form action="{% url 'editar-perfil' %}" method="post" enctype= "multipart/form-data">
+                {% csrf_token %}
+                <div class="modal fade " id="foto" tabindex="-1" aria-labelledby="example" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="example">Deseja alterar a foto de perfil?</h1>
+                            </div>
+                        <div class="modal-body">
+                            <label for="foto">Selecione uma imagem</label>
+                            <input type="file" name="foto" id="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <div class='text-center '>
+                <div class="container">
+                    <br>
+                    <br>
+                    <div class='titulo w-50 m-auto rounded-4 p-2'>
+                        <h3 class=' text-center fw-bold'>Notícias e novidades</h3>
+                    </div>
+                    <br>
+                    <br>
+                    {% for noticia in object_list %}
+                    <div class='container'>
+                        <div >
+                            <ul class='row m-0 p-0'>
+                                <li class='list-unstyled justify-content-center col '>
+                                    <div >
+                                        {% if noticia.cor_de_fundo == 'verde' %}
+                                        <div class='verde'>
+                                            <br>
+                                            <h2 class='text-center'>{{ noticia.titulo }}</h2>
+                                            <br>
+                                            <div class='d-flex justify-content-center'>
+                                                <img class='w-50 h-25 ' src="{{ noticia.imagem.url }}" >
+                                            </div>
+                                            <br>
+                                            <div class="container texto">
+                                                <div class="textarea-like" contenteditable="true">{{ noticia.conteudo }}</div>
+                                            </div>
+                                            <p class='text-center'>{{noticia.data_de_publicacao}}</p>
+                                            <br>
+                                        </div>
+                                        
+                                        {% endif %}
+                                            
+                                        {% if noticia.cor_de_fundo == 'vermelho' %}
+                                        <div class='vermelho d-block'>
+                                            <br>
+                                            <h2 class='text-center ms-3'>{{ noticia.titulo }}</h2>
+                                            <br>
+                                            <div class='d-flex justify-content-center'>
+                                                <img class='w-50 h-25 ' src="{{ noticia.imagem.url }}" >
+                                            </div>
+                                            <br>
+                                            <div class="container texto">
+                                                <div class="textarea-like" contenteditable="true">{{ noticia.conteudo }}</div>
+                                            </div>
+                                            <br>
+                                            <p class='text-center'>{{noticia.data_de_publicacao}}</p>
+                                            <br>
+                                        </div>
+                                        {% endif %}
+                                            
+                                        {% if noticia.cor_de_fundo == 'laranja' %}
+                                        <div class='laranja d-block'>
+                                            <br>
+                                            <h2 class='text-center ms-3'>{{ noticia.titulo }}</h2>
+                                            <br>
+                                            <div class='d-flex justify-content-center'>
+                                                <img class='w-50 h-25 ' src="{{ noticia.imagem.url }}" >
+                                            </div>
+                                            <br>
+                                            <div class="container texto">
+                                                <div class="textarea-like" contenteditable="true">{{ noticia.conteudo }}</div>
+                                            </div>
+                                            <br>
+                                            <p class='text-center'>{{noticia.data_de_publicacao}}</p>
+                                            <br>
+                                        </div>
+                                        {% endif %}      
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    {% empty %}
+                        <div>
+                            Nenuma notícia registrada
+                        </div>
+                    {% endfor%}
+                </div>    
+            </div>
+        </div>
+    </div>
+</body>
+
+
+{% endblock conteudo %}
+    

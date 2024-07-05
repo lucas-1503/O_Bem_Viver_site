@@ -1,0 +1,49 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>O Bem Viver</title>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        
+        
+        {% endblock head %}
+            
+    </head>
+
+
+    <body>
+        
+        {% block profile %}
+            
+        {% endblock profile %}
+            
+
+    {% block cabecalho %}
+        
+    {% endblock cabecalho %}
+                
+                
+    {% block conteudo %}
+    {% endblock conteudo %}
+    
+            
+    {% block rodapé %}
+                
+    {% endblock rodapé %}
+        
+    
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}" ></script>
+    <script src="{% static 'js/jquery.mask.min.js' %}" ></script>
+    <script src="{% static 'js/mascara.js' %}" ></script>        
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% block scripts %}
+    
+    {% endblock scripts %}
+    </body>
+</html>

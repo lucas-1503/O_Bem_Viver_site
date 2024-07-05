@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>O Bem Viver</title>
+        
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        
+        <style>
+            .corpo{
+                background-color:#e1decf;
+            }
+        </style>
+        {% endblock head %}
+
+{% block conteudo %}
+<body class='corpo '>
+    
+    <div class='container-md p-0 m-0 w-100'>
+        <div class='row'>
+            <div class='col-sm-4'>
+                <aside class='min-vh-100 w-25 position-fixed '>
+                    <div class='w-75 h-75 p-2 m-3 m-auto mt-2'>
+                        <img class='border rounded-circle w-100' src="https://placehold.jp/150x150.png" >
+                    </div>
+                    <ul class='list-unstyled'>
+                        <li class='list-unstyled'>
+                            <h4 class='text-center'>Olá, seja bem vind@ {{ user.username }}</h4>
+                        </li>
+                        <li class='list-unstyled'>
+                            {{user.last_name}}
+                        </li>
+                    </ul>
+                    <nav class='nav nav-tabs justify-content-center d-block'>
+                        <a class ='nav-link text-center' href="{% url 'perfil_staff' %}">Inicio</a>
+                        <a class ='nav-link text-center' href="{% url 'cadastro-usuario' %}">Criar Usuario</a>
+                        <a class ='nav-link text-center' href="{% url 'criar-turma' %}">Criar Turma</a>
+                        <a class ='nav-link text-center' href="{% url 'criar-boleto' %}">Enviar Boleto</a>
+                        <a class ='nav-link text-center' href="{% url 'logout' %}">Sair</a>
+                    </nav>
+                </aside>
+            </div>
+            <div class='col-sm-8 m-auto '>
+                <h3 class='text-center'>Deletar usuario?</h3>
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{form}}
+                    {{msg}}
+                    <br>
+                    <br>
+                    <br>
+                    <button class="btn btn-success " type="submit">Confirmar</button>
+                    <a href="{% url 'listar-usuario' %}" class='btn btn-warning'>Voltar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock conteudo %}

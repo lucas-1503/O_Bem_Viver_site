@@ -1,0 +1,15 @@
+th.em_analise{
+    color: yellow;
+}
+
+th.atrasado{
+    color: red;
+}
+
+th.em_aberto{
+    color: blue;
+}
+
+th.pago{
+    color: green;
+}

@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>O Bem Viver</title>
+        
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        
+        <style>
+            .corpo{
+                background-color:#e1decf;
+            }
+            a:link{
+                border: 3px solid #c46852;
+            }
+        </style>
+        {% endblock head %}
+
+
+{% block profile %}
+
+{% endblock profile %}
+    
+
+
+
+{% block cabecalho %}
+
+{% endblock cabecalho %}
+    
+    
+
+{% block conteudo %}
+<body class='corpo '>
+    <div class='container-fluid  justify-content-center '>
+        <div >
+            <nav class="navbar navbar-expand-lg position-absolute" style="background-color: transparent" >
+                <div class="container-fluid " >
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 m-auto ">
+                        <li class="nav-item p-1 ">
+                            <a class='btn  text-center fw-bold' href="{% url 'perfil_staff' %}" style='background-color:#7E9C9F; color:#e1decf;' >Inicio</a>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a class='btn text-center fw-bold' style='background-color:#7E9C9F; color:#e1decf;' href="{% url 'logout' %}">Sair</a>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <br>
+            <br>
+            <br>
+            <div class='d-block'>
+                {% if user.avatar == '' and user.genero_usuario == 'Feminino' %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{% static 'img/avatar-mulher.avif' %}" >
+                        </div>
+                        {% endif %}
+                        {% if user.avatar == '' and user.genero_usuario == 'Masculino' %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{% static 'img/avatar-homem.avif' %}" >
+                        </div>
+                        <br>
+                        {% endif %}
+                        {% if user.avatar == '' and user.genero_usuario == 'Outros' %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{% static 'img/avatar-outros.jpg' %}" >
+                        </div>
+                        {% endif %}
+                        {% if user.avatar %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{{user.avatar.url}}" >
+                        </div>
+                        {% endif %}
+                        <br>
+                        <div class='d-flex justify-content-center'>
+                            <button type="button" class='btn btn-light' data-bs-toggle="modal" data-bs-target="#foto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                    <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <br>
+                    {% if user.genero_usuario == 'Masculino' %}
+                            <li class='nav-item list-unstyled'>
+                                <h4 class='text-center'>Olá, seja bem vindo {{ user.username }}</h4>
+                            </li>  
+                            {% endif %}
+                            {% if user.genero_usuario == 'Feminino' %}
+                            <li class='nav-item list-unstyled'>
+                                <h4 class='text-center'>Olá, seja bem vinda {{ user.username }}</h4>
+                            </li>  
+                            {% endif %}
+                            {% if user.genero_usuario == 'Outros' %}
+                            <li class='nav-item list-unstyled'>
+                                <h4 class='text-center'>Olá, seja bem vinde {{ user.username }}</h4>
+                            </li>  
+                            {% endif %}
+            </div>
+            <form action="{% url 'editar-perfil' %}" method="post" enctype= "multipart/form-data">
+                {% csrf_token %}
+                <div class="modal fade " id="foto" tabindex="-1" aria-labelledby="example" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="example">Deseja alterar a foto de perfil?</h1>
+                            </div>
+                        <div class="modal-body">
+                            <label for="foto">Selecione uma imagem</label>
+                            <input type="file" name="foto" id="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <div class='col-sm-8 m-auto '>
+                <div class='ms-2'>
+                    <a class='btn text-center fw-bold' style='background-color:#7E9C9F; color:#e1decf;' href="{% url 'criar-boleto' %}">Enviar boleto</a>
+                </div>
+                <h3 class='text-center'>Boletos registrados:</h3>
+                <br>
+                <nav class='nav nav-tabs justify-content-center pb-2'>
+                    <button type="button" class='btn btn-primary d-flex justify-content-center' data-bs-toggle="collapse" data-bs-target="#filtro" aria-expanded="false" aria-controls="filtro">Filtrar</button>
+                </nav>
+                <br>
+                <div class='collapse container w-50 ' id="filtro">
+                    <form action="?" method="get" class='d-block form form-control justify-content-center'>
+                        <div class='container ms-4'>
+                            <input type="text" name="educando" value='{{request.GET.educando}}' class='p-1 border' autocomplete='off' placeholder='Nome do cliente'>
+                            <br>
+                            <label for="mes">Selecione o mês:</label>
+                            <input type="month" id="mes" name="mes" value="{{ request.GET.mes }}">
+                            <br>
+                            <label >Pago</label>
+                            <input type="radio" name="status" value='Pago'>
+                            <br>
+                            <label >Em análise</label>
+                            <input type="radio" name="status" value='Em análise'>
+                            <br>
+                            <label >Atrasado</label>
+                            <input type="radio" name="status" value='Atrasado'>
+                            <br>
+                            <label >Em aberto</label>
+                            <input type="radio" name="status" value='Em aberto'>
+                            <br>
+                            <button type="submit" class='btn btn-success'>Filtrar</button>
+                            <a href="{% url 'financeiro' %}" class='btn btn-light'>Limpar filtro</a>
+                        </div>
+                    </form>
+                </div>
+            
+                <br>
+                <div class='border rounded-5 table-responsive'>
+                    <table class='table table-striped'>
+                        <tr>
+                            <th class='text-center align-content-center fw-bold fs-5'>Cliente</th>
+                            <th class='text-center align-content-center fw-bold fs-5'>Status</th>
+                            <th class='text-center align-content-center fw-bold fs-5'>Mês de referência</th>
+                            <th class='text-center align-content-center fw-bold fs-5'>Alterar status para pago?</th>
+                            <th class='text-center align-content-center fw-bold fs-5'>Deletar boleto</th>
+                        </tr>
+                    
+                        {% for boleto in object_list %}
+                        <tr>
+                            <th class='text-center align-content-center'>{{ boleto.educando }}</th>
+                            {% if boleto.status == 'Em análise' %}
+                            <th class="bg-primary text-light d-flex justify-content-center p-3">{{ boleto.status }}</th>
+                            {% elif boleto.status == 'Atrasado' %}
+                            <th class="bg-danger text-light d-flex justify-content-center p-3">{{ boleto.status }}</th>
+                            {% elif boleto.status == 'Em aberto' %}
+                            <th class="bg-warning text-light d-flex justify-content-center p-3">{{ boleto.status }}</th>
+                            {% else %}
+                            <th class="bg-success text-light d-flex justify-content-center p-3">{{ boleto.status }}</th>
+                            {% endif %}
+                            <th class='text-center align-content-center'>{{ boleto.data_vencimento|date:"F" }}</th>
+                            <th class=' text-center align-content-center'>
+                                <button type="button" class="btn btn-success " data-toggle="modal" data-target="#modalExemplo{{boleto.pk}}">
+                                    Pago
+                                </button>
+                            </th>
+                            <th class=' text-center align-content-center'>
+                                <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#modalExemplo1{{boleto.pk}}">
+                                    Deletar
+                                </button>
+                            </th>
+                        </tr>
+                        <form action="{% url 'editar-boleto' boleto.pk %}" method="post">
+                            {% csrf_token %}
+                            <div class="modal fade" id="modalExemplo{{boleto.pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmação de pagamento</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                    Tem certeza que {{boleto.educando}} pagou o boleto de {{ boleto.data_vencimento|date:"F" }}??
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form action="{% url 'deletar-boleto' boleto.pk %}" method="post">
+                            {% csrf_token %}
+                            <div class="modal fade" id="modalExemplo1{{boleto.pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Deletar Boleto</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                    Deseja deletar esse boleto? 
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        {% empty %}
+                        <tr>
+                            <td colspan='3'>
+                                Nenhum boleto registrado
+                            </td>
+                        </tr>
+                    
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+{% endblock conteudo %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block cabecalho %}
+<header>
+    <h2 class='text-center'> Olá, seja bem vind@ {{ user.username }}</h2>
+        <nav class='nav nav-tabs justify-content-center'>
+            <a class ='nav-link text-center' href="{% url 'perfil_staff' %}">Inicio</a>
+            <a class ='nav-link text-center' href="{% url 'cadastro-usuario' %}">Criar Usuario</a>
+            <a class ='nav-link text-center' href="{% url 'criar-turma' %}">Criar Turma</a>
+            <a class ='nav-link text-center' href="{% url 'criar-boleto' %}">Enviar Boleto</a>
+            <a class ='nav-link text-center' href="{% url 'logout' %}">Sair</a>
+        </nav>
+        <br>
+        <br>
+        <br>
+</header>
+{% endblock cabecalho %}
+
+
+{% block conteudo %}
+
+<h1>Cadastro do Filho</h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+    <br>
+    <br>
+    <br>
+    <button class="btn btn-success " type="submit">Cadastrar</button>
+    <a href="{% url 'perfil_staff' %}" class="btn btn-warning ">Não dadastrar filho</a>
+
+</form>
+
+{% endblock conteudo %}
+    
+{% block scripts %}
+
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}" ></script>
+    <script src="{% static 'js/jquery.mask.min.js' %}" ></script>
+    <script src="{% static 'js/mascara.js' %}" ></script>
+
+{% endblock scripts %}

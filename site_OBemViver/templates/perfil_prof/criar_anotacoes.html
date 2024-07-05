@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>O Bem Viver</title>
+        
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        
+        
+        <style>
+            .corpo{
+                background-color:#e1decf;
+            }
+
+            .vermelho{
+                background-color:#C46852;
+                width: auto; /* ajusta automaticamente à largura do conteúdo */
+                display: block;
+            }
+            .verde{
+                background-color:#7E9C9F;
+                width: auto; /* ajusta automaticamente à largura do conteúdo */
+                display: block;
+            }
+            .laranja{
+                background-color:#c18B64;
+                width: auto; /* ajusta automaticamente à largura do conteúdo */
+                display: block;
+            }
+            .textarea-like {
+                min-height: 100px; /* Defina uma altura mínima desejada */
+                max-height: 500px; /* Defina uma altura máxima desejada */
+                overflow-y: auto; /* Adicione uma barra de rolagem vertical se necessário */
+                padding: 5px; /* Adicione um espaçamento interno */
+                outline: none; /* Remova a borda azul ao focar */
+                resize: none; /* Remova a capacidade de redimensionar */
+                font-family: inherit; /* Use a mesma fonte do texto */
+                font-size: inherit; /* Use o mesmo tamanho de fonte do texto */
+                line-height: inherit; /* Use a mesma altura de linha do texto */
+            }
+            .texto{
+                display:flex;
+                justify-content: center;
+                padding:20px;
+                align-items: center;
+            }
+            .titulo{
+                font-size:32px;
+                background-color:#c18B64;
+                color: #E1DACF;
+            }
+        </style>
+        {% endblock head %}
+
+{% block conteudo %}
+<body class='corpo '>
+    
+    <div class='container-md w-100'>
+        <div class='row'>
+            <div class='col-sm-4'>
+                <aside class='min-vh-100 w-25 position-fixed '>
+                    <br>
+                    <br>
+                    {% if user.avatar == '' and user.genero_usuario == 'Feminino' %}
+                    <div class='w-75 h-75 p-2 m-3 m-auto mt-2'>
+                        <img name='foto' class='border rounded-circle w-100' src="{% static 'img/avatar-mulher.avif' %}" >
+                    </div>
+                    {% endif %}
+                    {% if user.avatar == '' and user.genero_usuario == 'Masculino' %}
+                    <div class='w-75 h-75 p-2 m-3 m-auto mt-2'>
+                        <img name='foto' class='border rounded-circle w-100' src="{% static 'img/avatar-homem.avif' %}" >
+                    </div>
+                    <br>
+                    {% endif %}
+                    
+                    
+                    {% if user.avatar == '' and user.genero_usuario == 'Outros' %}
+                    <div class='w-75 h-75 p-2 m-3 m-auto mt-2'>
+                        <img name='foto' class='border rounded-circle w-100' src="{% static 'img/avatar-outros.jpg' %}" >
+                    </div>
+                    {% endif %}
+                    {% if user.avatar %}
+                    <div class='w-75 h-75 p-2 m-3 m-auto mt-2'>
+                        <img name='foto' class='border rounded-circle w-100' src="{{user.avatar.url}}" >
+                    </div>
+                    {% endif %}
+                    <ul class='list-unstyled'>
+
+                        <div class='d-flex justify-content-end'>
+                            <button type="button" class='btn btn-light' data-bs-toggle="modal" data-bs-target="#foto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                    <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <br>
+                        
+                        {% if user.genero_usuario == 'Masculino' %}
+                        <li class='list-unstyled'>
+                            <h4 class='text-center'>Olá, seja bem vindo {{ user.username }}</h4>
+                        </li>  
+                        {% endif %}
+                        {% if user.genero_usuario == 'Feminino' %}
+                        <li class='list-unstyled'>
+                            <h4 class='text-center'>Olá, seja bem vinda {{ user.username }}</h4>
+                        </li>  
+                        {% endif %}
+                        {% if user.genero_usuario == 'Outros' %}
+                        <li class='list-unstyled'>
+                            <h4 class='text-center'>Olá, seja bem vinde {{ user.username }}</h4>
+                        </li>  
+                        {% endif %}    
+                    </ul>
+                    
+                    <nav class='nav nav-tabs justify-content-center d-block'>
+                        
+                        <a class='nav-link text-center' href="{% url 'perfil_prof' %}">Inicio</a>
+                        <a class='nav-link text-center' href="{% url 'criar-anotacoes' %}">Escrever anotações de aula</a>
+                        <a class='nav-link text-center' href="{% url 'logout' %}">Sair</a>
+                    </nav>
+                </aside>
+                <form action="{% url 'editar-perfil-prof' %}" method="post" enctype= "multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal fade" id="foto" tabindex="-1" aria-labelledby="example" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="example">Deseja alterar a foto de perfil?</h1>
+                                </div>
+                            <div class="modal-body">
+                                <label for="foto_prof">Selecione uma imagem</label>
+                                <input type="file" name="foto_prof" id="">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class='col-sm-8 m-auto '>
+                    <br>
+                    <br>
+                    <h3 class='text-md-center'>Anotações de aula:</h3>
+                    <br>
+                    <br>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{form }}
+                        <button type="submit" class='btn btn-success'>Enviar</button>
+                        <a href="/perfil_prof" class='btn btn-warning'>Voltar</a>
+                    </form>
+                </div>
+            </div>
+    
+{% endblock conteudo %}

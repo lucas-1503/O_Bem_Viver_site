@@ -1,0 +1,737 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>O Bem Viver</title>
+        
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        
+        
+        <style>
+            .corpo{
+                background-color:#e1decf;
+            }
+            .container{
+                max-width: 1024px;
+                width:100%;
+            }
+            .textarea-like {
+                max-width:600px;
+                width:100%;
+                margin: auto;
+                min-height: 100px; /* Defina uma altura mínima desejada */
+                max-height: 800px; /* Defina uma altura máxima desejada */
+                overflow-y: auto; /* Adicione uma barra de rolagem vertical se necessário */
+                padding: 5px; /* Adicione um espaçamento interno */
+                outline: none; /* Remova a borda azul ao focar */
+                resize: none; /* Remova a capacidade de redimensionar */
+                font-family: inherit; /* Use a mesma fonte do texto */
+                font-size: inherit; /* Use o mesmo tamanho de fonte do texto */
+                line-height: inherit; /* Use a mesma altura de linha do texto */
+            }
+            .texto{
+                display:flex;
+                justify-content: center;
+                padding:20px;
+                align-items: center;
+            }
+            .titulo{
+                font-size:32px;
+                background-color:#c18B64;
+                color: #E1DACF;
+            }
+            .table{
+                background-color:#c18B64;
+            }
+            a:link{
+                border: 3px solid #c46852;
+            }
+        </style>
+{% endblock head %}
+
+
+
+{% block conteudo %}
+<body class='corpo '> 
+    <div class='container-fluid  justify-content-center '>
+        <div >
+            <nav class="navbar navbar-expand-lg position-absolute" style="background-color: transparent" >
+                <div class="container-fluid " >
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 m-auto ">
+                        <li class="nav-item p-1 ">
+                            <a class='btn  text-center fw-bold' href="{% url 'perfil' %}" style='background-color:#7E9C9F; color:#e1decf;' >Inicio</a>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a class='btn text-center fw-bold' style='background-color:#7E9C9F; color:#e1decf;' href="{% url 'alterar-senha' %}">Dados pessoais</a>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a class='btn text-center fw-bold' style='background-color:#7E9C9F; color:#e1decf;' href="{% url 'listar-boleto' %}">Boletos</a>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a class='btn text-center fw-bold' style='background-color:#7E9C9F; color:#e1decf;' href="{% url 'listar-anotacoes' %}">Anotações de aula</a>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a class='btn text-center fw-bold' style='background-color:#7E9C9F; color:#e1decf;' href="{% url 'logout' %}">Sair</a>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <br>
+            <br>
+            <br>
+            <div class='d-block'>
+                {% if user.avatar == '' and user.genero_usuario == 'Feminino' %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{% static 'img/avatar-mulher.avif' %}" >
+                        </div>
+                        {% endif %}
+                        {% if user.avatar == '' and user.genero_usuario == 'Masculino' %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{% static 'img/avatar-homem.avif' %}" >
+                        </div>
+                        <br>
+                        {% endif %}
+                        {% if user.avatar == '' and user.genero_usuario == 'Outros' %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{% static 'img/avatar-outros.jpg' %}" >
+                        </div>
+                        {% endif %}
+                        {% if user.avatar %}
+                        <div class='p-2 m-3 m-auto mt-2 text-center'>
+                            <img name='foto' class='border rounded-circle ' style='height:170px;' src="{{user.avatar.url}}" >
+                        </div>
+                        {% endif %}
+                        <br>
+                        <div class='d-flex justify-content-center'>
+                            <button type="button" class='btn btn-light' data-bs-toggle="modal" data-bs-target="#foto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                    <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <br>
+                    {% if user.genero_usuario == 'Masculino' %}
+                            <li class='nav-item list-unstyled'>
+                                <h4 class='text-center'>Olá, seja bem vindo {{ user.username }}</h4>
+                            </li>  
+                            {% endif %}
+                            {% if user.genero_usuario == 'Feminino' %}
+                            <li class='nav-item list-unstyled'>
+                                <h4 class='text-center'>Olá, seja bem vinda {{ user.username }}</h4>
+                            </li>  
+                            {% endif %}
+                            {% if user.genero_usuario == 'Outros' %}
+                            <li class='nav-item list-unstyled'>
+                                <h4 class='text-center'>Olá, seja bem vinde {{ user.username }}</h4>
+                            </li>  
+                            {% endif %}
+            </div>
+            <form action="{% url 'editar-perfil' %}" method="post" enctype= "multipart/form-data">
+                {% csrf_token %}
+                <div class="modal fade " id="foto" tabindex="-1" aria-labelledby="example" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="example">Deseja alterar a foto de perfil?</h1>
+                            </div>
+                        <div class="modal-body">
+                            <label for="foto">Selecione uma imagem</label>
+                            <input type="file" name="foto" id="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <div class='text-center align-content-center'>
+                <br>
+                <br>
+                <div class='titulo w-50 m-auto rounded-4 p-2'>
+                    <h3 class=' text-center fw-bold'>Anotações de aula</h3>
+                </div>
+                <br>
+                <br>
+                {% for anotacao in object_list %}
+                <div class='container border border-success rounded-4 m-2 text-center m-auto'>
+                    <div class='p-3'>
+                        <div class='table-responsive'>
+                            <table class='table '>
+                                <tr >
+                                    <th class ='col col-sm ' style='background-color:#e1decf; color:#c18B64;'>{{anotacao.data_de_publicacao}}</th>
+                                    <th class ='col col-sm text-center' style='background-color:#e1decf; color:#c18B64;'></th>
+                                    <th class ='col col-sm' style='background-color:#e1decf;'>
+                                        <div class='text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-emoji-tear text-danger" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                <path d="M6.831 11.43A3.1 3.1 0 0 1 8 11.196c.916 0 1.607.408 2.25.826.212.138.424-.069.282-.277-.564-.83-1.558-2.049-2.532-2.049-.53 0-1.066.361-1.536.824q.126.27.232.535.069.174.135.373ZM6 11.333C6 12.253 5.328 13 4.5 13S3 12.254 3 11.333c0-.706.882-2.29 1.294-2.99a.238.238 0 0 1 .412 0c.412.7 1.294 2.284 1.294 2.99M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5m4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5m-1.5-3A.5.5 0 0 1 10 3c1.162 0 2.35.584 2.947 1.776a.5.5 0 1 1-.894.448C11.649 4.416 10.838 4 10 4a.5.5 0 0 1-.5-.5M7 3.5a.5.5 0 0 0-.5-.5c-1.162 0-2.35.584-2.947 1.776a.5.5 0 1 0 .894.448C4.851 4.416 5.662 4 6.5 4a.5.5 0 0 0 .5-.5"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th class ='col col-sm' style='background-color:#e1decf;'>
+                                        <div class='text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-emoji-neutral text-warning" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                <path d="M4 10.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5m3-4C7 5.672 6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8s1-.672 1-1.5m4 0c0-.828-.448-1.5-1-1.5s-1 .672-1 1.5S9.448 8 10 8s1-.672 1-1.5"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th class ='col col-sm' style='background-color:#e1decf;'>
+                                        <div class='text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-emoji-smile text-primary" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5m4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th class ='col col-sm' style='background-color:#e1decf;'>
+                                        <div class='text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-emoji-grin text-success" viewBox="0 0 16 16">
+                                                <path d="M12.946 11.398A6.002 6.002 0 0 1 2.108 9.14c-.114-.595.426-1.068 1.028-.997C4.405 8.289 6.48 8.5 8 8.5s3.595-.21 4.864-.358c.602-.07 1.142.402 1.028.998a5.95 5.95 0 0 1-.946 2.258m-.078-2.25C11.588 9.295 9.539 9.5 8 9.5s-3.589-.205-4.868-.352c.11.468.286.91.517 1.317A37 37 0 0 0 8 10.75a37 37 0 0 0 4.351-.285c.231-.407.407-.85.517-1.317m-1.36 2.416c-1.02.1-2.255.186-3.508.186s-2.488-.086-3.507-.186A5 5 0 0 0 8 13a5 5 0 0 0 3.507-1.436ZM6.488 7c.114-.294.179-.636.179-1 0-1.105-.597-2-1.334-2C4.597 4 4 4.895 4 6c0 .364.065.706.178 1 .23-.598.662-1 1.155-1 .494 0 .925.402 1.155 1M12 6c0 .364-.065.706-.178 1-.23-.598-.662-1-1.155-1-.494 0-.925.402-1.155 1a2.8 2.8 0 0 1-.179-1c0-1.105.597-2 1.334-2C11.403 4 12 4.895 12 6"/>
+                                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m0-1A7 7 0 1 1 8 1a7 7 0 0 1 0 14"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <br>
+                                {% if anotacao.concentracao  == "Ruim" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Concentração</h5> 
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>    
+                                        <img  style='height:28px;' src="{% static 'img/tag.png'%}" alt="">
+                                    </th>
+                                    <th class='table-danger'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                                {% endif %}
+                                {% if anotacao.concentracao  == "Regular" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Concentração</h5> 
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>    
+                                        <img  style='height:28px;' src="{% static 'img/tag.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-warning'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.concentracao  == "Bom" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Concentração</h5> 
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>    
+                                        <img  style='height:28px;' src="{% static 'img/tag.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-primary'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.concentracao  == "Excelente" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Concentração</h5> 
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>    
+                                        <img  style='height:28px;' src="{% static 'img/tag.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-success'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.engajamento  == "Ruim" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Engajamento</h5>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:28px;' src="{% static 'img/emoji.png'%}" alt="">
+                                    </th>
+                                    <th class='table-danger'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.engajamento  == "Regular" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Engajamento</h5>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:28px;' src="{% static 'img/emoji.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-warning'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'> 
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.engajamento  == "Bom" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Engajamento</h5>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:28px;' src="{% static 'img/emoji.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-primary'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.engajamento  == "Excelente" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Engajamento</h5>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:28px;' src="{% static 'img/emoji.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-success'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.competencias_tecnicas  == "Ruim" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Competências técnicas</h5>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:36px;' src="{% static 'img/engrenagem.png'%}" alt="">
+                                    </th>
+                                    <th class='table-danger'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.competencias_tecnicas  == "Regular" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Competências técnicas</h5>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:36px;' src="{% static 'img/engrenagem.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-warning'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.competencias_tecnicas  == "Bom" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Competências técnicas</h5>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:36px;' src="{% static 'img/engrenagem.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-primary '>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.competencias_tecnicas  == "Excelente" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Competências técnicas</h5>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:36px;' src="{% static 'img/engrenagem.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-success'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.competencias_socio_emocionais  == "Ruim" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Competências socio-emocionais</h5>
+                                        </div> 
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:36px;' src="{% static 'img/coracao.png'%}" alt="">
+                                    </th>
+                                    <th class='table-danger'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.competencias_socio_emocionais  == "Regular" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Competências socio-emocionais</h5>
+                                        </div> 
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:36px;' src="{% static 'img/coracao.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-warning'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.competencias_socio_emocionais  == "Bom" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Competências socio-emocionais</h5>
+                                        </div> 
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:36px;' src="{% static 'img/coracao.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-primary'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% if anotacao.competencias_socio_emocionais  == "Excelente" %}
+                                <tr>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='d-flex justify-content-around'>
+                                            <h5 style='font-size:12px;'>Competências socio-emocionais</h5>
+                                        </div> 
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <img  style='height:36px;' src="{% static 'img/coracao.png'%}" alt="">
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th style='background-color:#e1decf;'>
+                                        <div class='col col-sm'>
+                                        </div>
+                                    </th>
+                                    <th class='table-success'>
+                                        <div class='col col-sm text-center'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-check-lg text-success " viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                            </svg>
+                                        </div>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            </table>
+                            <br>
+                            <div class='container border  p-4 rounded-4' style='background-color:#c18B64;'>
+                                <div class='d-flex justify-content-around border-bottom text-center'>
+                                    <h3>Observações</h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-pin-angle-fill" viewBox="0 0 16 16" >
+                                    <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146"/>
+                                    </svg>
+                                </div>
+                                <br>
+                                <div class=''>
+                                    <div class="textarea-like text-center" contenteditable="true">{{ anotacao.observacoes }}</div>
+                                    <div>Eviado por: Prof. {{anotacao.remetente}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>        
+</body>
+    
+    
+    {% endblock conteudo %}
+    
+

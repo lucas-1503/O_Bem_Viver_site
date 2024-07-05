@@ -1,0 +1,177 @@
+/* Reset */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Seção cabeçalho */
+
+.container{
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+    background-color:#e1decf;
+}
+
+.logo img{
+
+    width: 150px;
+    height: 150px;
+    position: relative;
+    float: left;
+    z-index: 10000;
+    padding-bottom: 80px;
+    padding-right: 30px;
+}
+
+.logo{
+    max-height: 80px;
+    padding: 0;
+    margin: 0;
+}
+
+header{
+    display: flex;
+    border-bottom:3px solid #c18B64;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    justify-content: space-around;
+    background-color: #e1decf;
+}
+
+#cabecalho .nav .nav-link.active{
+    background-color: #c18B64;
+    color: #e1decf;
+}
+
+#cabecalho .nav .nav-link{
+    color: #c46852;
+    border: 2px solid #c46852;
+    display:inline-block;
+}
+
+#cabecalho .nav .nav-link:hover{
+    background-color: #c46852;
+    color: #e1decf;
+}
+#cabecalho .nav .cliente{
+    background-color: #c46852;
+    color: #e1decf;
+}
+
+#cabecalho .nav .nav-iten{
+    display:inline-block;
+}
+
+.dp-menu ul{
+    position: absolute;
+}
+
+.dp-menu ul ul{
+    display:none;
+}
+
+
+
+/* Seção Carousel de Imagens */
+
+.secao-carousel{
+    background-color: #e1decf;
+    height: 500px;
+}
+
+.carousel-item img{
+    height: 400px;
+}
+.carousel-item{
+    border: 5px solid #c18B64;
+    border-radius: 8px;
+}
+
+/* Seção Sobre */
+
+.sobre{
+    background-color: #e1decf;
+}
+
+.titulo h2{
+    color: #c18B64;
+}
+
+
+.conteudo{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.conteudo_image{
+    height: 350px;
+    width: 400px;
+    padding: 20px;
+}
+
+.conteudo-texto{
+    display: block;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+section.modalidades{
+    background-color:#e1decf;
+}
+
+span{
+    color: #c46852;
+}
+
+.buttom{
+    background-color:#e1decf ;
+    color: #c46852;
+    border: 2px solid #c46852;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.buttom:hover{
+    background-color: #c46852;
+    color: #e1decf;
+}
+
+/* Modalidades */
+
+.modalidades{
+    padding-top: 80px;;
+}
+
+#modalidades .nav-menu .active{
+    background-color: #c46852;
+    color: #e1decf;
+}
+
+.tab-content h5{
+    color: #c46852;
+}
+
+.text-color{
+    color: #c46852;
+}
+
+.social-links{
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+}
+
+.social-links i{
+    height: 100px;
+}
+
+footer{
+    border-top: 3px solid #c46852;
+}

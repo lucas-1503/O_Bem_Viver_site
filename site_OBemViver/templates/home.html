@@ -1,0 +1,205 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>O Bem Viver</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'Home/css/Home.css' %}">
+    </head>
+<body>
+    <div class="container">
+        <header class="navbar navbar-expand-lg sticky-top p-4" id="cabecalho">
+            <div class=" logo navbar-brand justify-content-start">
+                <img src="{% static 'Home/images/Logo.png' %}" alt="">
+            </div>
+            <div class="container">  
+                <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu-navegacao">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <nav class=" dp-menu navbar-collapse collapse justify-content-end" id="menu-navegacao">
+                    <ul class="nav nav-pills d-block d-md-flex">
+                        <li class="nav-iten fw-bold">
+                            <a href="#sobre" class="nav-link me-2 ">
+                                <i class="bi bi-house-door me-1"></i>
+                                Sobre Nós
+                            </a>
+                        </li>
+                        <li class="nav-iten fw-bold">
+                            <a href="#modalidades" class="nav-link me-2">
+                                <i class="bi bi-calendar-check me-1"></i>
+                                Modalidades
+                            </a>
+                        </li>
+                        <li class="nav-iten fw-bold">
+                            <a href="#contatos" class="nav-link me-2">
+                                <i class="bi bi-card-text me-1"></i>
+                                Contato
+                            </a>
+                        </li>
+                        <li class="nav-iten fw-bold">
+                            <a href="/login"  class="nav-link cliente">
+                                Portal
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <section  class="secao-carousel p-5">
+            <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active"  data-bs-interval="3000">
+                        <img src="{% static 'Home/images/criancas1.jpg' %}" class="d-block w-100" alt="">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="{% static 'Home/images/criancas2.jpg' %}" class="d-block w-100" alt="">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="{% static 'Home/images/criancas3.jpg' %}" class="d-block w-100" alt="">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </section>
+        <section id="sobre" class="sobre">
+            <div class="titulo">
+                <h2 class="mb-5 fw-bold text-center">Sobre <span>nós</span></h2>
+            </div>
+            <div class="conteudo">
+                <div class="conteudo_image">
+                    <img class="mx-auto d-block" src="{% static 'Home/images/Sobre3.jpg' %}" alt="">
+                </div>
+                <div class="conteudo-texto">
+                    <h4 class="text-center fw-bold pe-4 pt-5" ><span class="span">A escola</span></h4>
+                    <p class="text-center pt-5 pe-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo veniam recusandae repudiandae ipsa. Unde, ab nesciunt ad facere itaque sapiente velit asperiores? Maxime aut omnis pariatur similique accusantium iste numquam!</p>
+                </div>
+            </div>
+        </section>
+        <section id="modalidades" class=" modalidades pt-5 pb-5">
+            <div class="container">
+                <div class="row titulo">
+                    <h2 class="text-center mb-5 fw-bold">
+                        Modalidades
+                    </h2>
+                </div>
+                <div class="row">
+                    <aside class="col-md-2">
+                        <nav class="nav nav-menu nav-pills flex-colum ">
+                            <button type="button" data-bs-toggle="tab" data-bs-target="#musicalizacao" class="mb-1 fw-bold text-start nav-link buttom active">Musicalização infantil</button>
+                            <button type="button" data-bs-toggle="tab" data-bs-target="#artes-plasticas" class="mb-1 fw-bold text-start nav-link buttom ">Artes Plásticas</button>
+                            <button type="button" data-bs-toggle="tab" data-bs-target="#circo" class="mb-1 fw-bold text-start nav-link buttom ">Circo</button>
+                            <button type="button" data-bs-toggle="tab" data-bs-target="#instrumentos" class="mb-1 fw-bold text-start nav-link buttom ">Instrumentos</button>
+                            <button type="button" data-bs-toggle="tab" data-bs-target="#danca" class="mb-1 fw-bold text-start nav-link buttom ">Dança</button>
+                        </nav>
+                    </aside>
+                    <div class="col-md-10">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="musicalizacao">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img class="d-block w-100 rounded" src="{% static 'Home/images/Capturar.PNG' %}" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 class="fw-bold mt-2 text-center">Musicalização infantil</h5>
+                                        <p class="text-center fs-18 mt-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam eos voluptatibus explicabo voluptatum repellat similique ipsa veniam eveniet dolores tempora iste, ex quam, eligendi fuga reiciendis ea debitis alias nostrum!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="artes-plasticas">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img class="d-block w-100 rounded" src="{% static 'Home/images/Capturar.PNG' %}" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 class="fw-bold mt-2 text-center">Artes plásticas</h5>
+                                        <p class="text-center fs-18 mt-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam eos voluptatibus explicabo voluptatum repellat similique ipsa veniam eveniet dolores tempora iste, ex quam, eligendi fuga reiciendis ea debitis alias nostrum!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="circo">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img class="d-block w-100 rounded" src="{% static 'Home/images/Capturar.PNG' %}" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 class="fw-bold mt-2 text-center">Circo</h5>
+                                        <p class="text-center fs-18 mt-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam eos voluptatibus explicabo voluptatum repellat similique ipsa veniam eveniet dolores tempora iste, ex quam, eligendi fuga reiciendis ea debitis alias nostrum!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="instrumentos">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img class="d-block w-100 rounded" src="{% static 'Home/images/Capturar.PNG' %}" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 class="fw-bold mt-2 text-center">Instrumentos</h5>
+                                        <p class="text-center fs-18 mt-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam eos voluptatibus explicabo voluptatum repellat similique ipsa veniam eveniet dolores tempora iste, ex quam, eligendi fuga reiciendis ea debitis alias nostrum!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="danca">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img class="d-block w-100 rounded" src="{% static 'Home/images/Capturar.PNG' %}" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 class="fw-bold mt-2 text-center">Dança</h5>
+                                        <p class="text-center fs-18 mt-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam eos voluptatibus explicabo voluptatum repellat similique ipsa veniam eveniet dolores tempora iste, ex quam, eligendi fuga reiciendis ea debitis alias nostrum!</p>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="contatos" class="contatos titulo">
+            <h2 class="text-center fw-bold pb-5">Entre em contato pelas redes sociais</h2>
+            <div class="row">
+                <ul class="social-links">
+                    <li class="fs-1">
+                        <a href="#">
+                            <i class="bi bi-facebook text-color ps-5"></i>
+                        </a>
+                    </li>
+                    <li class="fs-1 ms-1 me-1">
+                        <a href="https://www.instagram.com/bemviverartehumanidades/" target="_blank">
+                            <i class="bi bi-instagram text-color"></i>
+                        </a>
+                    </li>
+                    <li class="fs-1">
+                        <a href="https://api.whatsapp.com/send?phone=5516981596073&text=Ol%C3%A1,%20vim%20atrav%C3%A9s%20do%20Site!" target="_blank">
+                            <i class="bi bi-whatsapp text-color pe-5"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <footer>
+            <p class="text-center pt-3">O Bem Viver - Todos os direitos reservados</p>
+            <p class="text-center">Endereço: Rua Conde de Afonso Celso, 255</p>
+        </footer>
+    </div>
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}" ></script>
+    <script src="{% static 'js/jquery.mask.min.js' %}" ></script>
+    <script src="{% static 'js/mascara.js' %}" ></script>        
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    
+</body>
+    
